@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Knight Sudoku — Team & Roles</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #1a1a2e;
+    color: #e0e0e0;
+    padding: 40px 20px;
+  }
+  .container { max-width: 1100px; margin: 0 auto; }
+
+  h1 {
+    text-align: center;
+    font-size: 2.2em;
+    color: #f0c040;
+    margin-bottom: 6px;
+  }
+  .subtitle {
+    text-align: center;
+    color: #aaa;
+    font-size: 1.05em;
+    margin-bottom: 40px;
+  }
+
+  /* ── member cards ── */
+  .members {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 50px;
+  }
+  .card {
+    background: #16213e;
+    border: 1px solid #0f3460;
+    border-radius: 14px;
+    padding: 28px 24px;
+    width: 320px;
+    text-align: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .card:hover { transform: translateY(-4px); box-shadow: 0 8px 30px rgba(0,0,0,0.5); }
+  .card .avatar {
+    width: 70px; height: 70px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.8em; font-weight: bold;
+    margin: 0 auto 14px;
+  }
+  .card.captain .avatar { background: #e94560; color: #fff; }
+  .card.duy     .avatar { background: #0f3460; color: #f0c040; }
+  .card.an      .avatar { background: #533483; color: #e0e0e0; }
+
+  .card h2 { font-size: 1.4em; margin-bottom: 4px; }
+  .card .role {
+    display: inline-block;
+    padding: 4px 14px; border-radius: 20px;
+    font-size: 0.82em; font-weight: 600;
+    margin-bottom: 12px;
+  }
+  .card.captain .role { background: #e94560; color: #fff; }
+  .card.duy     .role { background: #0f3460; color: #f0c040; }
+  .card.an      .role { background: #533483; color: #e0e0e0; }
+
+  .card .time { color: #888; font-size: 0.85em; margin-bottom: 14px; }
+
+  /* ── section blocks ── */
+  section { margin-bottom: 48px; }
+  section h2 {
+    font-size: 1.55em;
+    color: #f0c040;
+    border-bottom: 2px solid #0f3460;
+    padding-bottom: 8px;
+    margin-bottom: 20px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  section h2 .member-tag {
+    font-size: 0.65em;
+    padding: 3px 12px; border-radius: 14px;
+    font-weight: 600;
+  }
+  .tag-captain { background: #e94560; color: #fff; }
+  .tag-duy     { background: #0f3460; color: #f0c040; }
+  .tag-an      { background: #533483; color: #e0e0e0; }
+
+  .topic {
+    background: #16213e;
+    border: 1px solid #0f3460;
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+  }
+  .topic h3 { color: #f0c040; font-size: 1.1em; margin-bottom: 10px; }
+  .topic ul { padding-left: 20px; }
+  .topic li { margin-bottom: 6px; line-height: 1.55; }
+
+  /* ── pseudocode box ── */
+  .code-box {
+    background: #0d1117;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    padding: 16px 20px;
+    font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+    font-size: 0.88em;
+    line-height: 1.65;
+    white-space: pre;
+    overflow-x: auto;
+    color: #c9d1d9;
+    margin-top: 10px;
+  }
+  .code-box .kw { color: #ff7b72; }
+  .code-box .fn { color: #d2a8ff; }
+  .code-box .cm { color: #8b949e; font-style: italic; }
+  .code-box .num { color: #79c0ff; }
+  .code-box .str { color: #a5d6ff; }
+
+  /* ── table ── */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0;
+  }
+  th, td {
+    border: 1px solid #0f3460;
+    padding: 10px 14px;
+    text-align: left;
+  }
+  th { background: #0f3460; color: #f0c040; font-weight: 600; }
+  td { background: #16213e; }
+
+  /* ── footer ── */
+  footer {
+    text-align: center;
+    color: #666;
+    font-size: 0.85em;
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #0f3460;
+  }
+
+  /* ── flow steps ── */
+  .flow {
+    display: flex; flex-wrap: wrap; gap: 10px;
+    margin: 12px 0;
+  }
+  .flow-step {
+    background: #0f3460;
+    padding: 8px 16px; border-radius: 20px;
+    font-size: 0.85em;
+  }
+  .flow-step .n { color: #f0c040; font-weight: bold; margin-right: 6px; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <h1>&#9822; Knight Sudoku</h1>
+  <p class="subtitle">Team Member Roles &amp; Detailed Responsibilities</p>
+
+  <!-- ═══════════════════════ MEMBER CARDS ═══════════════════════ -->
+  <div class="members">
+
+    <div class="card captain">
+      <div class="avatar">AT</div>
+      <h2>Anh Tu&#7845;n</h2>
+      <span class="role">Main Captain</span>
+      <div class="time">&#9202; 5 – 7 minutes</div>
+      <p style="font-size:0.9em;line-height:1.5;color:#bbb;">
+        Introduction, game rules, core data structures,<br>
+        <strong>Backtracking + Warnsdorff algorithm</strong>
+      </p>
+    </div>
+
+    <div class="card duy">
+      <div class="avatar">DY</div>
+      <h2>Duy</h2>
+      <span class="role">Supporter 1</span>
+      <div class="time">&#9202; 3 – 4 minutes</div>
+      <p style="font-size:0.9em;line-height:1.5;color:#bbb;">
+        Two game modes, auto-digit algorithm,<br>
+        <strong>Undo mechanism &amp; event handling</strong>
+      </p>
+    </div>
+
+    <div class="card an">
+      <div class="avatar">AN</div>
+      <h2>An</h2>
+      <span class="role">Supporter 2</span>
+      <div class="time">&#9202; 3 – 4 minutes</div>
+      <p style="font-size:0.9em;line-height:1.5;color:#bbb;">
+        Latin Square validation,<br>
+        <strong>Auto-solve (SwingWorker + Timer), GUI &amp; Demo</strong>
+      </p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════ ANH TUẤN ═══════════════════════ -->
+  <section>
+    <h2>
+      1. Anh Tu&#7845;n
+      <span class="member-tag tag-captain">Main Captain</span>
+    </h2>
+
+    <div class="topic">
+      <h3>&#128640; Project Introduction</h3>
+      <ul>
+        <li><strong>Project name:</strong> Knight Sudoku (&#272;&#7897;c M&atilde; Sudoku)</li>
+        <li><strong>Core idea:</strong> A fusion of two classic algorithmic problems:
+          <ul>
+            <li><strong>Knight's Tour</strong> &mdash; A knight visits all 64 squares exactly once, moving in an L-shape.</li>
+            <li><strong>Latin Square</strong> &mdash; An 8&times;8 grid where each row and column contains digits 1&rarr;8 exactly once.</li>
+          </ul>
+        </li>
+        <li><strong>Goal:</strong> Complete the Knight's Tour while maintaining a valid Latin Square &rarr; <em>WIN</em>.</li>
+      </ul>
+    </div>
+
+    <div class="topic">
+      <h3>&#128218; Game Rules</h3>
+      <ul>
+        <li>8&times;8 chessboard &mdash; move numbers from <strong>1 to 64</strong>.</li>
+        <li>Displayed digit = <code>(moveNumber - 1) % 8 + 1</code> &rarr; yields <strong>1&rarr;8</strong>.</li>
+        <li>Every row and column must contain all digits 1&rarr;8 (Latin Square constraint).</li>
+        <li>Legal moves: knight moves in L-shape &mdash; <code>(&plusmn;2, &plusmn;1)</code> or <code>(&plusmn;1, &plusmn;2)</code>.</li>
+      </ul>
+    </div>
+
+    <div class="topic">
+      <h3>&#128451; Core Data Structures</h3>
+      <table>
+        <tr><th>Field</th><th>Type</th><th>Description</th></tr>
+        <tr><td><code>moveBoard[8][8]</code></td><td>int[][]</td><td>Stores move numbers (1&rarr;64); 0 = empty</td></tr>
+        <tr><td><code>digitBoard[8][8]</code></td><td>int[][]</td><td>Stores Sudoku digits (1&rarr;8); 0 = empty</td></tr>
+        <tr><td><code>preFilled[8][8]</code></td><td>boolean[][]</td><td>Marks pre-filled cells</td></tr>
+        <tr><td><code>lastRow, lastCol</code></td><td>int</td><td>Current knight position; -1 if none</td></tr>
+        <tr><td><code>currentNumber</code></td><td>int</td><td>Next move number (1-based)</td></tr>
+      </table>
+    </div>
+
+    <div class="topic">
+      <h3>&#128736; Core Algorithm: Backtracking + Warnsdorff Heuristic</h3>
+      <p style="margin-bottom:12px;line-height:1.6;">
+        <strong>The Problem:</strong> Find a knight's path covering all 64 cells while satisfying the Latin Square constraint.
+      </p>
+
+      <p style="margin-bottom:4px;"><strong>Backtracking:</strong></p>
+      <ul>
+        <li>Start from a cell; try all 8 possible knight moves.</li>
+        <li>Recursively proceed. If dead end &rarr; <strong>undo</strong> and try another direction.</li>
+        <li>Base case: 64 cells filled (success) <em>OR</em> all options exhausted (failure).</li>
+      </ul>
+
+      <p style="margin-bottom:4px;margin-top:12px;"><strong>Warnsdorff Heuristic (optimization):</strong></p>
+      <ul>
+        <li>At each step, compute the <strong>Warnsdorff degree</strong> of each candidate cell.</li>
+        <li>Degree = number of unvisited cells reachable from that candidate <em>(with Latin Square constraint)</em>.</li>
+        <li><strong>Prioritize the smallest degree</strong> &rarr; reduces branching, accelerates search.</li>
+      </ul>
+
+      <p style="margin-bottom:4px;margin-top:12px;"><strong>Latin Square Pruning:</strong></p>
+      <ul>
+        <li><code>rowColConflict()</code> checks if the prospective digit already exists in the same row or column.</li>
+        <li>Conflict &rarr; prune that branch immediately (forward checking).</li>
+      </ul>
+    </div>
+
+    <div class="topic">
+      <h3>&#128200; Complexity Analysis</h3>
+      <table>
+        <tr><th>Variant</th><th>Worst-case</th><th>Practical</th></tr>
+        <tr><td>Naive (no pruning)</td><td>O(8<sup>64</sup>) &mdash; explosion</td><td>&mdash;</td></tr>
+        <tr><td>+ Warnsdorff only</td><td>O(8<sup>64</sup>)</td><td>Much faster</td></tr>
+        <tr><td>+ Latin Square pruning</td><td>Still exponential</td><td><strong>A few seconds</strong> &check;</td></tr>
+      </table>
+    </div>
+
+    <div class="topic">
+      <h3>&#128221; Algorithm Flow</h3>
+      <div class="flow">
+        <span class="flow-step"><span class="n">1</span>Pick start cell</span>
+        <span class="flow-step"><span class="n">2</span>Check Latin conflict</span>
+        <span class="flow-step"><span class="n">3</span>Mark cell</span>
+        <span class="flow-step"><span class="n">4</span>If m=64 &rarr; DONE</span>
+        <span class="flow-step"><span class="n">5</span>Compute Warnsdorff degrees</span>
+        <span class="flow-step"><span class="n">6</span>Sort ascending</span>
+        <span class="flow-step"><span class="n">7</span>Recurse each candidate</span>
+        <span class="flow-step"><span class="n">8</span>If all fail: undo &amp; backtrack</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════ DUY ═══════════════════════ -->
+  <section>
+    <h2>
+      2. Duy
+      <span class="member-tag tag-duy">Supporter 1</span>
+    </h2>
+
+    <div class="topic">
+      <h3>&#127922; Two Game Modes</h3>
+      <table>
+        <tr><th></th><th>Easy Mode</th><th>Hard Mode</th></tr>
+        <tr><td>Move selection</td><td>Player clicks a cell</td><td>Player clicks a cell</td></tr>
+        <tr><td>Digit entry</td><td><strong>Computer auto-assigns</strong> a valid digit 1&rarr;8</td><td><strong>Player manually inputs</strong> digit 1&rarr;8</td></tr>
+        <tr><td>Error</td><td>Alert if no valid digit available</td><td>Alert if digit conflicts with row/column</td></tr>
+      </table>
+    </div>
+
+    <div class="topic">
+      <h3>&#129302; Auto-Digit Algorithm &mdash; <code>makeMoveAutoDigit()</code></h3>
+      <p style="margin-bottom:10px;">When the player clicks a cell in Easy mode, the computer finds a valid digit:</p>
+<div class="code-box"><span class="cm">// Input: row, col — the cell the player just clicked</span>
+<span class="cm">// Returns: 0 = success | 1 = invalid move | 2 = no digit found</span>
+
+<span class="fn">makeMoveAutoDigit</span>(row, col):
+    <span class="kw">if</span> cell is occupied or not a knight jump <span class="kw">then return</span> <span class="num">1</span>
+
+    <span class="kw">for</span> digit d = <span class="num">1</span> <span class="kw">to</span> <span class="num">8</span>:
+        <span class="kw">if</span> d does <span class="kw">NOT</span> conflict with row <span class="kw">AND</span> column:
+            digitBoard[row][col] = d
+            moveBoard[row][col] = currentNumber
+            currentNumber++
+            <span class="kw">return</span> <span class="num">0</span>   <span class="cm">// success</span>
+
+    <span class="kw">return</span> <span class="num">2</span>   <span class="cm">// no valid digit found</span></div>
+      <ul style="margin-top:12px;">
+        <li><code>hasDigitConflict(row, col, d)</code> scans the entire row and column for digit <code>d</code>.</li>
+        <li>This is a <strong>greedy algorithm</strong> — picks the first valid digit encountered.</li>
+      </ul>
+    </div>
+
+    <div class="topic">
+      <h3>&#9000; Manual-Digit Algorithm &mdash; <code>makeMoveWithDigit()</code></h3>
+      <p style="margin-bottom:10px;">In Hard mode, the player types a digit. Validation follows:</p>
+<div class="code-box"><span class="cm">// Input: row, col, digit (1–8 typed by player)</span>
+<span class="cm">// Returns: 0 = success | 1 = invalid move | 2 = digit conflict</span>
+
+<span class="fn">makeMoveWithDigit</span>(row, col, digit):
+    <span class="kw">if</span> cell occupied or not a knight jump <span class="kw">then return</span> <span class="num">1</span>
+    <span class="kw">if</span> digit &lt; <span class="num">1</span> or digit &gt; <span class="num">8</span> <span class="kw">then return</span> <span class="num">1</span>
+
+    <span class="kw">if</span> <span class="fn">hasDigitConflict</span>(row, col, digit):
+        <span class="kw">return</span> <span class="num">2</span>   <span class="cm">// conflict — tell player to try another digit</span>
+
+    digitBoard[row][col] = digit
+    moveBoard[row][col]  = currentNumber
+    currentNumber++
+    <span class="kw">return</span> <span class="num">0</span>   <span class="cm">// success</span></div>
+    </div>
+
+    <div class="topic">
+      <h3>&#8617; Undo Mechanism</h3>
+      <ul>
+        <li>Finds the cell where <code>moveBoard = currentNumber - 1</code> (non-preFilled).</li>
+        <li>Clears that cell's data, decrements <code>currentNumber</code>.</li>
+        <li>Re-locates the knight's new position (<code>lastRow</code>, <code>lastCol</code>).</li>
+        <li>Constraint: cannot undo if <code>currentNumber &le; 1</code>.</li>
+      </ul>
+    </div>
+
+    <div class="topic">
+      <h3>&#128073; Event Handling Flow</h3>
+<div class="code-box"><span class="fn">handleClick</span>(row, col):
+    <span class="kw">if</span> animation is running <span class="kw">then return</span>
+    <span class="kw">if</span> cell is preFilled <span class="kw">then return</span>
+
+    <span class="kw">if</span> game is Easy mode:
+        result = <span class="fn">makeMoveAutoDigit</span>(row, col)
+        <span class="kw">if</span> result == <span class="num">1</span> <span class="kw">then return</span>           <span class="cm">// invalid knight jump</span>
+        <span class="kw">if</span> result == <span class="num">2</span> <span class="kw">then</span>                   <span class="cm">// no valid digit</span>
+            show popup: <span class="str">"No 1–8 digit fits here!"</span>
+            <span class="kw">return</span>
+        highlight valid next moves
+
+    <span class="kw">else</span> <span class="cm">// Hard mode</span>
+        <span class="kw">if</span> <span class="kw">NOT</span> <span class="fn">isValidMove</span>(row, col) <span class="kw">then return</span>
+        show input dialog: <span class="str">"Enter a digit 1–8:"</span>
+        validate: parse int, range <span class="num">1</span>–<span class="num">8</span>, row/col conflict
+        result = <span class="fn">makeMoveWithDigit</span>(row, col, digit)
+        <span class="kw">if</span> result == <span class="num">2</span> <span class="kw">then</span>
+            show popup: <span class="str">"Digit already in row or column!"</span>
+            <span class="kw">return</span>
+        highlight valid next moves
+
+    check win condition</div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════ AN ═══════════════════════ -->
+  <section>
+    <h2>
+      3. An
+      <span class="member-tag tag-an">Supporter 2</span>
+    </h2>
+
+    <div class="topic">
+      <h3>&#9989; Latin Square Validation</h3>
+      <p style="margin-bottom:8px;"><strong><code>isLatinSquareValid()</code></strong></p>
+      <ul>
+        <li>For each <strong>row</strong>: verify all digits 1&rarr;8 present, no duplicates.</li>
+        <li>For each <strong>column</strong>: verify all digits 1&rarr;8 present, no duplicates.</li>
+        <li>Uses an efficient <code>boolean[9]</code> array for O(1) lookups.</li>
+      </ul>
+
+      <p style="margin-bottom:8px;margin-top:12px;"><strong><code>isConflictAt(row, col)</code></strong></p>
+      <ul>
+        <li>Checks a specific cell for conflicts with others in the same row/column.</li>
+        <li>Used to color cells <strong>red</strong> on the GUI in real-time.</li>
+      </ul>
+
+<div class="code-box"><span class="fn">isLatinSquareValid</span>():
+    <span class="cm">// Check all rows</span>
+    <span class="kw">for</span> each row r (<span class="num">0</span>&rarr;<span class="num">7</span>):
+        <span class="kw">boolean</span>[] seen = <span class="kw">new boolean</span>[<span class="num">9</span>]
+        <span class="kw">for</span> each column c (<span class="num">0</span>&rarr;<span class="num">7</span>):
+            d = digitBoard[r][c]
+            <span class="kw">if</span> d == <span class="num">0</span> <span class="kw">or</span> seen[d] <span class="kw">then return false</span>
+            seen[d] = <span class="kw">true</span>
+
+    <span class="cm">// Check all columns</span>
+    <span class="kw">for</span> each column c (<span class="num">0</span>&rarr;<span class="num">7</span>):
+        <span class="kw">boolean</span>[] seen = <span class="kw">new boolean</span>[<span class="num">9</span>]
+        <span class="kw">for</span> each row r (<span class="num">0</span>&rarr;<span class="num">7</span>):
+            d = digitBoard[r][c]
+            <span class="kw">if</span> d == <span class="num">0</span> <span class="kw">or</span> seen[d] <span class="kw">then return false</span>
+            seen[d] = <span class="kw">true</span>
+
+    <span class="kw">return true</span>  <span class="cm">// Latin Square is valid</span></div>
+    </div>
+
+    <div class="topic">
+      <h3>&#9889; Auto-Solve Feature</h3>
+      <p style="margin-bottom:8px;">When the player clicks <strong>"Auto Solve"</strong>:</p>
+      <ul>
+        <li><code>KnightSudoku.solveComplete()</code> runs inside a <strong>SwingWorker</strong> (background thread).</li>
+        <li>The Event Dispatch Thread (EDT) is never blocked &mdash; the UI stays responsive.</li>
+        <li>If a solution path is found &rarr; <code>animateSolution(path)</code> plays it out.</li>
+      </ul>
+
+      <p style="margin-bottom:8px;margin-top:12px;"><strong><code>animateSolution()</code></strong></p>
+      <ul>
+        <li>Uses <code>javax.swing.Timer</code> with <strong>120 ms</strong> interval per step.</li>
+        <li>Each tick: fills one cell from the solution path, refreshes the board.</li>
+        <li>After all 64 steps &rarr; checks the win condition.</li>
+      </ul>
+
+<div class="code-box"><span class="fn">handleAutoSolve</span>():
+    <span class="kw">if</span> animation is running <span class="kw">then</span> stop it
+
+    <span class="kw">new SwingWorker</span>&lt;<span class="kw">int</span>[], Void&gt;():
+        <span class="fn">doInBackground</span>():
+            <span class="kw">return</span> KnightSudoku.<span class="fn">solveComplete</span>()  <span class="cm">// runs off EDT</span>
+
+        <span class="fn">done</span>():
+            path = <span class="fn">get</span>()
+            <span class="kw">if</span> path <span class="kw">is null then</span>
+                show message: <span class="str">"No solution found!"</span>
+            <span class="kw">else</span>
+                <span class="fn">animateSolution</span>(path)
+
+<span class="fn">animateSolution</span>(path):
+    timer = <span class="kw">new Timer</span>(<span class="num">120</span>ms)
+    <span class="kw">for</span> each cell in path (<span class="num">0</span>&rarr;<span class="num">63</span>):
+        fill that cell
+        refresh board
+        highlight valid next moves
+    check win condition</div>
+    </div>
+
+    <div class="topic">
+      <h3>&#128187; GUI Overview</h3>
+      <table>
+        <tr><th>Component</th><th>Description</th></tr>
+        <tr><td><code>GridLayout(8,8)</code></td><td>8&times;8 chessboard grid</td></tr>
+        <tr><td><code>CellButton</code></td><td>Custom <code>JButton</code> with knight position indicator (red dot)</td></tr>
+        <tr><td>Yellow <code>CLR_HIGHLIGHT</code></td><td>Valid knight-move destinations</td></tr>
+        <tr><td>Orange <code>CLR_CURRENT</code></td><td>Current knight location</td></tr>
+        <tr><td>Red <code>CLR_CONFLICT</code></td><td>Cell violating Latin Square rules</td></tr>
+        <tr><td>Blue <code>CLR_PREFILL</code></td><td>Pre-filled cells (reserved)</td></tr>
+        <tr><td><code>statusLabel</code></td><td>Live move counter + digit feedback</td></tr>
+        <tr><td>"Ho&agrave;n t&aacute;c" button</td><td>Undo the last move</td></tr>
+        <tr><td>"T&#7921; gi&#7843;i" button</td><td>Auto-solve animation</td></tr>
+        <tr><td>"V&aacute;n m&#7899;i" button</td><td>New game with mode selection popup</td></tr>
+      </table>
+    </div>
+
+    <div class="topic">
+      <h3>&#127909; Live Demo</h3>
+      <ul>
+        <li>Demo <strong>Easy mode</strong>: click a highlighted cell &rarr; computer auto-assigns a valid digit 1&rarr;8.</li>
+        <li>Demo <strong>Hard mode</strong>: click a highlighted cell &rarr; input dialog appears &rarr; player types a digit &rarr; validated in real-time.</li>
+        <li>Demo <strong>Auto-Solve</strong>: click "T&#7921; gi&#7843;i" &rarr; the full 64-move solution plays out as an animation.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════ SUMMARY ═══════════════════════ -->
+  <section>
+    <h2>&#127942; Summary</h2>
+    <table>
+      <tr><th>Member</th><th>Key Topics</th><th>Time</th></tr>
+      <tr>
+        <td><strong>Anh Tu&#7845;n</strong> (Captain)</td>
+        <td>Project intro, rules, data structures, <strong>Backtracking + Warnsdorff</strong>, complexity</td>
+        <td>5&ndash;7 min</td>
+      </tr>
+      <tr>
+        <td><strong>Duy</strong></td>
+        <td>2 game modes, <strong>auto-digit algorithm</strong>, manual-digit validation, <strong>undo</strong>, event handling</td>
+        <td>3&ndash;4 min</td>
+      </tr>
+      <tr>
+        <td><strong>An</strong></td>
+        <td><strong>Latin Square validation</strong>, auto-solve (SwingWorker + Timer), <strong>GUI components</strong>, live demo</td>
+        <td>3&ndash;4 min</td>
+      </tr>
+    </table>
+  </section>
+
+  <footer>
+    Knight Sudoku &copy; 2026 &mdash; Team of 3: Anh Tu&#7845;n, Duy, An
+  </footer>
+
+</div>
+</body>
+</html>
