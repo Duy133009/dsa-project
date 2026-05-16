@@ -1,6 +1,6 @@
 # Độc Mã Sudoku — Kịch bản Thuyết trình
 
-> **Nhóm 3 thành viên:** Anh Tuấn (Main Captain), Duy, An
+> **Nhóm 3 thành viên:** Thanh Tuấn (Main Captain), Duy, An
 
 ---
 
@@ -8,7 +8,7 @@
 
 | Thành viên | Vai trò | Nội dung phụ trách |
 |---|---|---|
-| **Anh Tuấn** | Main Captain | Giới thiệu tổng quan, luật chơi, thuật toán cốt lõi: Backtracking + Warnsdorff |
+| **Thanh Tuấn** | Main Captain | Giới thiệu tổng quan, luật chơi, thuật toán cốt lõi: Backtracking + Warnsdorff |
 | **Duy** | Hỗ trợ 1 | Hai chế độ chơi, thuật toán máy tự điền số, undo, xử lý sự kiện |
 | **An** | Hỗ trợ 2 | Kiểm tra Latin Square, auto-solve bằng SwingWorker, GUI, demo |
 
@@ -18,7 +18,7 @@
 
 ---
 
-### I. Anh Tuấn — Main Captain (5-7 phút)
+### I. Thanh Tuấn — Main Captain (5-7 phút)
 
 #### 1. Giới thiệu dự án
 - **Tên dự án:** Độc Mã Sudoku (Knight Sudoku)
@@ -230,7 +230,7 @@ isLatinSquareValid():
 
 ---
 
-### I. Tuấn — Main Captain (5-7 minutes)
+### I. Thanh Tuấn — Main Captain (5-7 minutes)
 
 #### 1. Project Introduction
 - **Project Name:** Knight Sudoku (Độc Mã Sudoku)

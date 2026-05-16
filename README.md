@@ -254,7 +254,7 @@ projectDSA/
 
 | Member | Role | Key Responsibility |
 |---|---|---|
-| **Anh Tuấn** | Main Captain | Project intro, rules, **Backtracking + Warnsdorff** algorithm |
+| **Thanh Tuấn** | Main Captain | Project intro, rules, **Backtracking + Warnsdorff** algorithm |
 | **Duy** | Supporter 1 | Game modes, **auto-digit algorithm**, undo, event handling |
 | **An** | Supporter 2 | **Latin Square validation**, auto-solve, GUI, demo |
 
@@ -271,5 +271,5 @@ MIT &mdash; feel free to use, modify, and learn from this project.
 <br>
 
 <p align="center">
-  <b>Made with &#9749; and &#9822; by Anh Tuấn, Duy &amp; An</b>
+  <b>Made with &#9749; and &#9822; by Thanh Tuấn, Duy &amp; An</b>
 </p>
